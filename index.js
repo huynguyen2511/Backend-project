@@ -18,7 +18,7 @@ app.use(express.json());// khi da qua cua cors(dung theo minh config)=> xem co d
 app.use(express.urlencoded({extended: true})); //Doc cac kieu data khac nhu mang? => convert sang json
 
 initRoutes(app)
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 8888
 
 const listener = app.listen(PORT, ()=>{
     console.log('Server is running on port ' + listener.address().port);
