@@ -6,10 +6,10 @@ import { internalServerError, notFound } from '../middleware/handle_error'
 
 const initRoutes = (app) =>{
 
-    app.use('/api/v1/user', user)
-    app.use('/api/v1/employer', employer)
-    app.use('/api/v1/auth', auth)
-    app.use('/api/v1/insert', insert)
+    app.use('/api/user', user)
+    app.use('/api/employer', employer)
+    app.use('/api/auth', auth)
+    app.use('/api/insert', insert)
 
     app.use(notFound)
 }
