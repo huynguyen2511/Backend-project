@@ -9,7 +9,7 @@ POST http://localhost:5000/api/auth/register
 Content-Type: application/json
 
 {
-    "name": "Huydeptrai",
+    "name": "admin",
     "email": "admin@gmail.com",
     "password": "123123"
 }
@@ -26,11 +26,11 @@ Content-Type: application/json
 
 ###
 GET http://localhost:5000/api/user/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImVtYWlsIjoiYWRtaW4xQGdtYWlsLmNvbSIsInJvbGVfY29kZSI6IlIyIiwiaWF0IjoxNjkxMzE2NDE3LCJleHAiOjE2OTE3NDg0MTd9.GV6utDxc2kWJqsF9JY_-9KhpMI7NeCSDi5LQ_hBG1-s
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlX2NvZGUiOiJSMiIsImlhdCI6MTY5NTUzMjc3NSwiZXhwIjoxNjk1NTMyNzg1fQ.pq19E9iqUyfdoFRxHmkfLrzJX8NOlFkTBTBXtVVGLKg
 
 
 ###
-GET http://localhost:5000/api/insert
+
 
 
 

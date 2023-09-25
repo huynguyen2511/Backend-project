@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     workLocation: DataTypes.STRING,
     district: DataTypes.STRING,
     avatar: DataTypes.STRING,
-    role_code: DataTypes.STRING
+    role_code: DataTypes.STRING,
+    refresh_token: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Employer',
