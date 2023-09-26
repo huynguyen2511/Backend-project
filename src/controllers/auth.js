@@ -28,7 +28,7 @@ export const login = async (req, res) =>{
 
 export const employerRegister = async (req, res) =>{
     try {
-        const { error } = joi.object({ name, email , password, sex, phone, jobPosition, workLocation, district }).validate(req.body)
+        const { error } = joi.object({ name, email , password, sex, phone, jobPosition }).validate(req.body)
         if(error) return badRequest(error.details[0]?.message, res)
         const response = await service.employerRegister(req.body)
         return res.status(200).json(response)

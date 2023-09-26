@@ -87,7 +87,7 @@ export const login = ({email, password}) => new Promise( async (resolve, reject)
 
 
 
-export const employerRegister = ({name, email, password, sex, phone, jobPosition, workLocation, district}) => new Promise( async (resolve, reject) => {
+export const employerRegister = ({name, email, password, sex, phone, jobPosition}) => new Promise( async (resolve, reject) => {
     try {
         const response = await db.Employer.findOrCreate({
             where: { email },
@@ -97,9 +97,7 @@ export const employerRegister = ({name, email, password, sex, phone, jobPosition
                 password: hashPassword(password),
                 sex,
                 phone,
-                jobPosition,
-                workLocation,
-                district
+                jobPosition
             }
         })
         console.log(response);

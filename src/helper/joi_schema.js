@@ -6,6 +6,7 @@ export const password = joi.string().pattern(new RegExp('^[a-zA-Z0-9]{6,30}$')).
 export const sex = joi.string().min(4).max(6).required()
 export const phone = joi.string().max(10).required()
 export const jobPosition = joi.string().required()
+export const company = joi.string().required()
 export const workLocation = joi.string().required()
 export const district = joi.string().required()
 export const refreshToken = joi.string().required()

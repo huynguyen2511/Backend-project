@@ -44,9 +44,8 @@ Content-Type: application/json
     "password": "123123",
     "sex": "Male",
     "phone": "0386703822",
-    "jobPosition": "HR Staff",
-    "workLocation": "Quang Ninh",
-    "district": "Ha Long"
+    "company": "Bia Tuoi 118",
+    "jobPosition": "HR Staff"
 }
 
 ###
@@ -57,3 +56,6 @@ Content-Type: application/json
     "email": "huy123@gmail.com",
     "password": "123123"
 }
+
+###
+GET http://localhost:5000/api/employer/
