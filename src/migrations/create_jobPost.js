@@ -10,12 +10,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {type: Sequelize.STRING },
-      salary: {type: Sequelize.STRING },
+      attributesId: {type: Sequelize.STRING },
       provinceCode: {type: Sequelize.STRING },
       address: {type: Sequelize.STRING },
       employerId: {type: Sequelize.STRING },
-      benefits: {type: Sequelize.TEXT },
-      requirements: {type: Sequelize.TEXT },
+      labelCode: {type: Sequelize.STRING },
+      categoryCode: {type: Sequelize.STRING },
+      overviewId: {type: Sequelize.STRING },
+      areaCode: {type: Sequelize.STRING },
       description: {type: Sequelize.TEXT },
       
       createdAt: {

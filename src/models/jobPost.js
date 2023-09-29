@@ -11,17 +11,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      JobPost.belongsTo(models.Employer, { foreignKey: 'employerId', targetKey: 'id', as: 'employer' })
+      // JobPost.belongsTo(models.Employer, { foreignKey: 'employerId', targetKey: 'id', as: 'employer' })
+      
     }
   }
   JobPost.init({
     title: DataTypes.STRING,
-    salary: DataTypes.STRING,
+    attributesId: DataTypes.STRING,
     provinceCode: DataTypes.STRING,
     address: DataTypes.STRING,
     employerId: DataTypes.STRING,
-    benefits: DataTypes.TEXT,
-    requirements: DataTypes.TEXT,
+    labelCode: DataTypes.STRING,
+    categoryCode: DataTypes.STRING,
+    overviewId: DataTypes.STRING,
+    areaCode: DataTypes.STRING,
     description: DataTypes.TEXT,
 
   }, {

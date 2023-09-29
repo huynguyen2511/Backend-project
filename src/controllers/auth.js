@@ -51,7 +51,6 @@ export const employerLogin = async (req, res) =>{
 export const refreshTokenController = async (req, res) =>{
     try {
         const { error } = joi.object({ refreshToken }).validate(req.body)
-        console.log(req.body.refreshToken);
         if(error) return badRequest(error.details[0]?.message, res)
         const response = await service.refreshToken(req.body.refreshToken)
         console.log(response);

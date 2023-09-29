@@ -12,12 +12,13 @@ module.exports = {
       name: {type: Sequelize.STRING },
       email: {type: Sequelize.STRING },
       password: {type: Sequelize.STRING },
-      sex: {type: Sequelize.STRING },
+      gender: {type: Sequelize.STRING },
       phone: {type: Sequelize.STRING },
       jobPosition: {type: Sequelize.STRING },
       avatar: {type: Sequelize.STRING },
       role_code: {type: Sequelize.STRING, defaultValue:'R3'},
       refresh_token: {type: Sequelize.STRING },
+      statusCode: {type: Sequelize.STRING, defaultValue:'R3' },
       
       createdAt: {
         allowNull: false,

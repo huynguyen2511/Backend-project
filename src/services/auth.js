@@ -134,7 +134,7 @@ export const employerLogin = ({email, password}) => new Promise( async (resolve,
         })
         const isChecked = response && bcrypt.compareSync(password, response.password)
         const token = isChecked 
-        ? jwt.sign({id: response.id, email: response.email, role_code: response.role_code}, process.env.JWT_SECRET, {expiresIn: '10s'}) 
+        ? jwt.sign({id: response.id, email: response.email, role_code: response.role_code}, process.env.JWT_SECRET, {expiresIn: '1d'}) 
         : null
         //JWT_SECRET_REFRESH_TOKEN
         const refreshToken = isChecked 
