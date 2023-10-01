@@ -2,7 +2,6 @@ import db from '../models'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { notAuth } from '../middleware/handle_error';
-import { not } from 'joi';
 import { generateCode } from '../helper/fn';
 
 const salt = bcrypt.genSaltSync(10);
@@ -90,13 +89,7 @@ export const login = ({email, password}) => new Promise( async (resolve, reject)
 
 export const employerRegister = ({name, email , password, gender, phone, jobPosition, companyName, address , province }) => new Promise( async (resolve, reject) => {
     try {
-        const provinceCode = await db.Province.findOne({
-            where: { value : province },
-            attributes: {
-                exclude: ['value']
-            }
-        })
-        console.log(provinceCode);
+        const provinceCode = generateCode(province)
         const employerId = generateCode(name)
         const companyId = generateCode(companyName)
         const response = await db.Employer.findOrCreate({
