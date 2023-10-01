@@ -1,6 +1,6 @@
 import * as service from "../services"; //vd4
 import { internalServerError, badRequest } from "../middleware/handle_error";
-import { name, email, password, sex, phone, jobPosition, workLocation, district, refreshToken } from "../helper/joi_schema";
+import { name, email, password, gender, phone, jobPosition, companyName, address, province, refreshToken } from "../helper/joi_schema";
 import joi from 'joi'
 
 export const register = async (req, res) =>{
@@ -28,7 +28,7 @@ export const login = async (req, res) =>{
 
 export const employerRegister = async (req, res) =>{
     try {
-        const { error } = joi.object({ name, email , password, sex, phone, jobPosition }).validate(req.body)
+        const { error } = joi.object({ name, email , password, gender, phone, jobPosition, companyName, address , province}).validate(req.body)
         if(error) return badRequest(error.details[0]?.message, res)
         const response = await service.employerRegister(req.body)
         return res.status(200).json(response)

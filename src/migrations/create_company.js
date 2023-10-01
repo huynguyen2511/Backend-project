@@ -9,7 +9,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      employerId: {type: Sequelize.STRING },
       companyName: {type: Sequelize.STRING },
       phone: {type: Sequelize.STRING },
       email: {type: Sequelize.STRING },

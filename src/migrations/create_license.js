@@ -11,7 +11,7 @@ module.exports = {
       },
       related_documents: { type: Sequelize.STRING },
       additional_documents: {type: Sequelize.STRING },
-      statusCode: { type: Sequelize.STRING },
+      statusCode: {type: Sequelize.STRING, defaultValue:'S1' },
       employerId: {type: Sequelize.STRING },
       
       createdAt: {

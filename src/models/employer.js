@@ -12,11 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Employer.belongsTo(models.Role, {foreignKey: 'role_code', targetKey: 'code', as: 'roleData'})
-      Employer.hasOne(models.Company, { foreignKey: 'employerId', as: 'employerComp' })
+      Employer.belongsTo(models.Company, { foreignKey: 'companyId', targetKey: 'id', as: 'employerComp' })
       Employer.hasMany(models.JobPost, { foreignKey: 'employerId', as: 'employerPost' })
+      Employer.hasOne(models.License, { foreignKey: 'employerId', as: 'employerLicense' })
     }
   }
   Employer.init({
+    companyId: DataTypes.STRING,
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,

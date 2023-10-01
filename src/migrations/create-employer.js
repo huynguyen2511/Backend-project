@@ -9,6 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      companyId: {type: Sequelize.STRING },
       name: {type: Sequelize.STRING },
       email: {type: Sequelize.STRING },
       password: {type: Sequelize.STRING },
@@ -18,7 +19,7 @@ module.exports = {
       avatar: {type: Sequelize.STRING },
       role_code: {type: Sequelize.STRING, defaultValue:'R3'},
       refresh_token: {type: Sequelize.STRING },
-      statusCode: {type: Sequelize.STRING, defaultValue:'R3' },
+      statusCode: {type: Sequelize.STRING, defaultValue:'S1' },
       
       createdAt: {
         allowNull: false,

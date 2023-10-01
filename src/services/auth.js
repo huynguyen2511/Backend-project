@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { notAuth } from '../middleware/handle_error';
 import { not } from 'joi';
+import { generateCode } from '../helper/fn';
 
 const salt = bcrypt.genSaltSync(10);
 const hashPassword = password => bcrypt.hashSync(password, salt);
@@ -87,20 +88,55 @@ export const login = ({email, password}) => new Promise( async (resolve, reject)
 
 
 
-export const employerRegister = ({name, email, password, sex, phone, jobPosition}) => new Promise( async (resolve, reject) => {
+export const employerRegister = ({name, email , password, gender, phone, jobPosition, companyName, address , province }) => new Promise( async (resolve, reject) => {
     try {
+        const provinceCode = await db.Province.findOne({
+            where: { value : province },
+            attributes: {
+                exclude: ['value']
+            }
+        })
+        console.log(provinceCode);
+        const employerId = generateCode(name)
+        const companyId = generateCode(companyName)
         const response = await db.Employer.findOrCreate({
             where: { email },
             defaults: {
+                id: employerId,
+                companyId,
                 name,
                 email,
                 password: hashPassword(password),
-                sex,
+                gender,
                 phone,
                 jobPosition
             }
         })
+        await db.Company.findOrCreate({
+            where: { companyName },
+            defaults: {
+                id: companyId,
+                companyName,
+                phone: null,
+                email: null,
+                taxCode: null,
+                field_of_activity: null,
+                staffSize: null,
+                address,
+                provinceCode
+            } 
+        })
+        await db.License.create({
+            employerId,
+            related_documents: null,
+            additional_documents: null
+        })
+     
         console.log(response);
+
+
+
+        //Generate token
         const accessToken = response[1] ? jwt.sign({id: response[0].id, email: response[0].email, role_code: response[0].role_code}, process.env.JWT_SECRET, {expiresIn: '10s'}) : null
         //JWT_SECRET_REFRESH_TOKEN
         const refreshToken = response[1] 
