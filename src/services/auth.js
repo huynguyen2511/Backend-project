@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { notAuth } from '../middleware/handle_error';
 import { generateCode } from '../helper/fn';
+import { Op } from 'sequelize';
 
 const salt = bcrypt.genSaltSync(10);
 const hashPassword = password => bcrypt.hashSync(password, salt);
@@ -124,7 +125,19 @@ export const employerRegister = ({name, email , password, gender, phone, jobPosi
             related_documents: null,
             additional_documents: null
         })
-     
+        await db.Province.findOrCreate({
+            where:{
+                [Op.or]:[
+                    {code : provinceCode},
+                    {value: province}
+                ]
+            },
+            defaults:{
+                code: provinceCode,
+                value: province
+            }
+        })
+
         console.log(response);
 
 
