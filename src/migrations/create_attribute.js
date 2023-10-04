@@ -12,7 +12,8 @@ module.exports = {
       salary: {type: Sequelize.STRING },
       benefits: {type: Sequelize.TEXT },
       requirements: {type: Sequelize.TEXT },
-      
+      published: {type: Sequelize.STRING },
+      hashtag: {type: Sequelize.STRING },
       createdAt: {
         allowNull: false,
         type: 'TIMESTAMP',

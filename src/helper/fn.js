@@ -1,4 +1,4 @@
-import { number } from "joi"
+
 
 export const generateCode = (value) =>{
     let output = ''
@@ -14,18 +14,6 @@ export const generateCode = (value) =>{
         output += merge.charAt(index)
         length = index
     }
-    return `${value.charAt(4)}${value.charAt(0)}${value.charAt(3)}${output}${value.charAt(value.length-1)}`.toUpperCase()  
+    return `${value.charAt(4)}${output}`.toUpperCase()  
 }
-
-
-export const generateRandomCode = (length) =>{
-    const char = 'abcdefghjklmnopABCDEFGHJKLMNOP'
-    const num = '1234567890'
-    let code = ''
-    for (let i = 0; i < length - 1; i++){
-        code += char.charAt(Math.floor(Math.random() * char.length))
-    }
-    return `${code}${num.charAt(Math.floor(Math.random() * char.length))}`
-}
-
 //vd10

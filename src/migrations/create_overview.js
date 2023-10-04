@@ -11,6 +11,7 @@ module.exports = {
       },
       code: { type: Sequelize.STRING },
       area: {type: Sequelize.STRING },
+      category: {type: Sequelize.STRING },
       bonus: {type: Sequelize.STRING },
       created: {type: Sequelize.DATE },
       expired: {type: Sequelize.DATE },

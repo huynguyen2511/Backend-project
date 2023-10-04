@@ -1,30 +1,66 @@
+import { generateCode } from '../helper/fn'
 import db from '../models'
 import { v4 as generateId } from 'uuid'
 
-export const createCompany = (body, employerId) => new Promise( async (resolve, reject) => {
-    console.log(body , employerId);
+export const updateCompany = ( body) => new Promise( async (resolve, reject) => {
     try {
-        const response = await db.Company.create({
+        if (!body.id){
+            resolve({
+                err: 1,
+                mes: "Missing id" 
+            })
+        }else{
+            const response = await db.Company.findOne({
+                where: {id: body.id}
+            })
+            if (response){
+                response.companyName= body.companyName;
+                response.phone = body.phone;
+                response.email = body.email || null,
+                response.taxCode = body.taxCode || null,
+                response.field_of_activity = body.field_of_activity || null,
+                response.staffSize = body.staffSize || null,
+                response.address = body.address,
+                response.provinceCode = generateCode(body.province),
+                response.description = body.description || null
+                await response.save();
+            }
+             resolve({
+            err:  0,
+            mes: 'Updated',
+            })
+        }
+    } catch (error) {
+        reject(error)
+    }
+})
 
-      
-                id: generateId(),
-                employerId,
-                companyName: body.companyName,
-                phone: body.phone,
-                email: body.email,
-                taxCode: body.taxCode,
-                field_of_activity: body.field_of_activity,
-                staffSize: body.staffSize,
-                workLocation: body.workLocation,
-                district: body.district,
-                description: body.description || null,
-       
-        })
-        
-        resolve({
-            err: response ? 0 : 1,
-            mes: response ? 'Created' : 'Cannot create new company',
-        })
+export const updateLicense = ( body ) => new Promise( async (resolve, reject) => {
+    try {
+        if (!body.id){
+            resolve({
+                err: 1,
+                mes: "Missing id" 
+            })
+        }else{
+            const response = await db.License.findOne({
+                where: {id: body.id}
+            })
+            if (response){
+                response.related_documents= body.related_documents;
+                response.additional_documents = body.additional_documents;
+                response.statusCode = 'S2';
+                await response.save();
+            }
+             resolve({
+            err:  0,
+            mes: 'Updated',
+            })
+
+    
+
+            
+        }
     } catch (error) {
         reject(error)
     }
