@@ -1,5 +1,3 @@
-
-
 export const generateCode = (value) =>{
     let output = ''
     value = value

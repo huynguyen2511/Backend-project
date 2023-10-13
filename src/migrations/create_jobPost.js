@@ -5,19 +5,18 @@ module.exports = {
     await queryInterface.createTable('JobPosts', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       title: {type: Sequelize.STRING },
       attributesId: {type: Sequelize.STRING },
-      provinceCode: {type: Sequelize.STRING },
+      province: {type: Sequelize.STRING },
       address: {type: Sequelize.STRING },
       employerId: {type: Sequelize.STRING },
+      companyId: {type: Sequelize.STRING },
       labelCode: {type: Sequelize.STRING },
       categoryCode: {type: Sequelize.STRING },
       overviewId: {type: Sequelize.STRING },
-      areaCode: {type: Sequelize.STRING },
       description: {type: Sequelize.TEXT },
       
       createdAt: {

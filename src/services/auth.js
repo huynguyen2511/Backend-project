@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import { notAuth } from '../middleware/handle_error';
 import { generateCode } from '../helper/fn';
 import { Op } from 'sequelize';
+import { v4 as generateId } from 'uuid'
 
 const salt = bcrypt.genSaltSync(10);
 const hashPassword = password => bcrypt.hashSync(password, salt);
@@ -88,65 +89,49 @@ export const login = ({email, password}) => new Promise( async (resolve, reject)
 
 
 
-export const employerRegister = ({name, email , password, gender, phone, jobPosition, companyName, address , province }) => new Promise( async (resolve, reject) => {
+export const employerRegister = (body) => new Promise( async (resolve, reject) => {
+    console.log(body);
     try {
-        const provinceCode = generateCode(province)
-        const employerId = generateCode(name)
-        const companyId = generateCode(companyName)
+        const employerId = generateId()
+        const companyId = generateId()
         const response = await db.Employer.findOrCreate({
-            where: { email },
+            where: { email: body.email },
             defaults: {
                 id: employerId,
                 companyId,
-                name,
-                email,
-                password: hashPassword(password),
-                gender,
-                phone,
-                jobPosition
+                name: body.name,
+                email: body.email,
+                password: hashPassword(body.password),
+                gender: body.gender,
+                phone: body.phone,
+                jobPosition: body.jobPosition
             }
         })
-        await db.Company.findOrCreate({
-            where: { companyName },
-            defaults: {
-                id: companyId,
-                companyName,
-                phone: null,
-                email: null,
-                taxCode: null,
-                field_of_activity: null,
-                staffSize: null,
-                address,
-                provinceCode
-            } 
+        await db.Company.create({
+            id: companyId,
+            companyName: body.companyName,
+            phone: null,
+            email: null,
+            taxCode: null,
+            field_of_activity: null,
+            staffSize: null,
+            address: body.address,
+            provinceCode: body.provinceCode
         })
         await db.License.create({
             employerId,
             related_documents: null,
             additional_documents: null
         })
-        await db.Province.findOrCreate({
-            where:{
-                [Op.or]:[
-                    {code : provinceCode},
-                    {value: province}
-                ]
-            },
-            defaults:{
-                code: provinceCode,
-                value: province
-            }
-        })
 
         console.log(response);
-
 
 
         //Generate token
         const accessToken = response[1] ? jwt.sign({id: response[0].id, email: response[0].email, role_code: response[0].role_code}, process.env.JWT_SECRET, {expiresIn: '10s'}) : null
         //JWT_SECRET_REFRESH_TOKEN
         const refreshToken = response[1] 
-        ? jwt.sign({id: response[0].id}, process.env.JWT_SECRET_REFRESH_TOKEN, {expiresIn: '15d'}) 
+        ? jwt.sign({id: response[0].id}, process.env.JWT_SECRET_REFRESH_TOKEN, {expiresIn: '1d'}) 
         : null
         resolve({
             err: response[1] ? 0 : 1,
@@ -176,7 +161,7 @@ export const employerLogin = ({email, password}) => new Promise( async (resolve,
         })
         const isChecked = response && bcrypt.compareSync(password, response.password)
         const token = isChecked 
-        ? jwt.sign({id: response.id, email: response.email, role_code: response.role_code}, process.env.JWT_SECRET, {expiresIn: '1d'}) 
+        ? jwt.sign({id: response.id, email: response.email, role_code: response.role_code, companyId: response.companyId}, process.env.JWT_SECRET, {expiresIn: '1d'}) 
         : null
         //JWT_SECRET_REFRESH_TOKEN
         const refreshToken = isChecked 

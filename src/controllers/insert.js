@@ -9,3 +9,12 @@ export const insertData = async (req, res) =>{
         return internalServerError(res)
     }
 }
+
+export const getProvince = async (req, res) =>{
+    try {
+        const response = await service.getProvince()
+        return res.status(200).json(response)
+    } catch (error) {
+        return internalServerError(res)
+    }
+}

@@ -1,3 +1,11 @@
 INSERT INTO Roles (code , value) VALUE ('R1' , 'Admin');
 INSERT INTO Roles (code , value) VALUE ('R2' , 'User');
 INSERT INTO Roles (code , value) VALUE ('R3' , 'Employer');
+
+INSERT INTO Categories (code , value , header) VALUE ('pt' , 'Part-time' , 'Tuyển nhân viên part-time');
+INSERT INTO Categories (code , value , header) VALUE ('ft' , 'Full-time' , 'Tuyển nhân viên full-time');
+INSERT INTO Categories (code , value , header) VALUE ('pft' , 'Part-time, Full-time' , 'Tuyển nhân viên part-time, full-time');
+
+INSERT INTO Statuses (code , value) VALUE ('S1' , 'Unverified');
+INSERT INTO Statuses (code , value) VALUE ('S2' , 'Pending verified');
+INSERT INTO Statuses (code , value) VALUE ('S3' , 'Verified');

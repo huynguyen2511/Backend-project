@@ -7,7 +7,11 @@ const router = express.Router()
 router.use(verifyToken)
 
 router.get('/', controller.getCurrentEmployer)
-router.put('/setting/company', controller.updateCompany)
-router.put('/setting/license', controller.updateLicense)
+router.put('/updateEmployer', controller.updateEmployer)
+
+router.put('/setting/updateCompany', controller.updateCompany)
+router.put('/setting/updateLicense', controller.updateLicense)
+router.get('/getCompany', controller.getCompanyByEmployer)
+router.get('/getLicense', controller.getLicenseByEmployer)
 
 module.exports = router
