@@ -1,6 +1,7 @@
 import { generateCode } from '../helper/fn'
 import db from '../models'
 import { v4 as generateId } from 'uuid'
+const cloudinary = require('cloudinary').v2;
 
 export const updateCompany = ( body, companyId ) => new Promise( async (resolve, reject) => {
     try {
@@ -33,14 +34,14 @@ export const updateCompany = ( body, companyId ) => new Promise( async (resolve,
     }
 })
 
-export const updateLicense = ( body , id) => new Promise( async (resolve, reject) => {
+export const updateLicense = (id, link) => new Promise( async (resolve, reject) => {
     try {
         const response = await db.License.findOne({
             where: {employerId: id}
         })
         if (response){
-            response.related_documents= body.related_documents;
-            response.additional_documents = body.additional_documents;
+            response.related_documents= link?.path;
+            // response.additional_documents = body.additional_documents;
             response.statusCode = 'S2';
             await response.save();
             resolve({
@@ -55,6 +56,7 @@ export const updateLicense = ( body , id) => new Promise( async (resolve, reject
         }
     } catch (error) {
         reject(error)
+        if(fileData) cloudinary.uploader.destroy(fileData.filename)
     }
 })
 
@@ -91,7 +93,7 @@ export const getLicenseByEmployer = (id) => new Promise(async(resolve, reject) =
             nest: true,
             include: [
                 {model: db.Employer, as: 'employerLicense', attributes:['name', 'email']},
-        
+                {model: db.Status, as: 'statusData', attributes:['value']},
             ],
             attributes: ['id', 'related_documents', 'additional_documents', 'statusCode']
         })

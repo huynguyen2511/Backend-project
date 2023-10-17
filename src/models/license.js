@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       License.belongsTo(models.Employer, {foreignKey: 'employerId', targetKey: 'id', as: 'employerLicense'})
+      License.belongsTo(models.Status, {foreignKey: 'statusCode', targetKey: 'code', as: 'statusData'})
     }
   }
   License.init({
