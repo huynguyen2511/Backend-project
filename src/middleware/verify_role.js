@@ -13,7 +13,7 @@ export const isUser = (req, res, next) =>{
 }
 
 export const isEmployer = (req, res, next) =>{
-    const {role_code} = req.employer
+    const {role_code} = req.user
     if (role_code !== 'R3') return notAuth('Only Employer can enter', res)
     next()
 }

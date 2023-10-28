@@ -26,4 +26,5 @@ export const categoryCode = joi.string().required()
 export const procategoryvince = joi.string().required()
 export const salary = joi.string().required()
 export const benefits = joi.string().required()
+export const username = joi.string().required()
 

@@ -1,6 +1,7 @@
 export * from './auth'
 export * from './employer'
 export * from './user'
+export * from './admin'
 export * from './insert'
 export * from './company'
 export * from './jobPost'

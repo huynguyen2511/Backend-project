@@ -9,23 +9,23 @@ import { v4 as generateId } from 'uuid'
 const salt = bcrypt.genSaltSync(10);
 const hashPassword = password => bcrypt.hashSync(password, salt);
 
-export const register = ({name, email, password}) => new Promise( async (resolve, reject) => {
+export const register = (body) => new Promise( async (resolve, reject) => {
     try {
         const response = await db.User.findOrCreate({
-            where: { email },
+            where: { email: body.email },
             defaults: {
-                name,
-                email,
-                password: hashPassword(password)
+                id: generateId(),
+                name: body.name,
+                email: body.email,
+                password: hashPassword(body.password)
             }
         })
-        console.log(response);
-        const accessToken = response[1] 
-        ? jwt.sign({id: response[0].id, email: response[0].email, role_code: response[0].role_code}, process.env.JWT_SECRET, {expiresIn: '10s'}) 
+
+        const accessToken = response[1] ? jwt.sign({id: response[0].id, email: response[0].email, role_code: response[0].role_code}, process.env.JWT_SECRET, {expiresIn: '10s'}) 
         : null
         //JWT_SECRET_REFRESH_TOKEN
         const refreshToken = response[1] 
-        ? jwt.sign({id: response[0].id}, process.env.JWT_SECRET_REFRESH_TOKEN, {expiresIn: '15d'}) 
+        ? jwt.sign({id: response[0].id}, process.env.JWT_SECRET_REFRESH_TOKEN, {expiresIn: '1d'}) 
         : null
 
         resolve({
@@ -55,11 +55,11 @@ export const login = ({email, password}) => new Promise( async (resolve, reject)
         })
         const isChecked = response && bcrypt.compareSync(password, response.password)
         const token = isChecked 
-        ? jwt.sign({id: response.id, email: response.email, role_code: response.role_code}, process.env.JWT_SECRET, {expiresIn: '10s'}) 
+        ? jwt.sign({id: response.id, email: response.email, role_code: response.role_code}, process.env.JWT_SECRET, {expiresIn: '1d'}) 
         : null
         //JWT_SECRET_REFRESH_TOKEN
         const refreshToken = isChecked
-        ? jwt.sign({id: response.id}, process.env.JWT_SECRET_REFRESH_TOKEN, {expiresIn: '360s'}) 
+        ? jwt.sign({id: response.id}, process.env.JWT_SECRET_REFRESH_TOKEN, {expiresIn: '7d'}) 
         : null
 
         resolve({
@@ -90,7 +90,6 @@ export const login = ({email, password}) => new Promise( async (resolve, reject)
 
 
 export const employerRegister = (body) => new Promise( async (resolve, reject) => {
-    console.log(body);
     try {
         const employerId = generateId()
         const companyId = generateId()
@@ -123,9 +122,6 @@ export const employerRegister = (body) => new Promise( async (resolve, reject) =
             related_documents: null,
             additional_documents: null
         })
-
-        console.log(response);
-
 
         //Generate token
         const accessToken = response[1] ? jwt.sign({id: response[0].id, email: response[0].email, role_code: response[0].role_code}, process.env.JWT_SECRET, {expiresIn: '10s'}) : null

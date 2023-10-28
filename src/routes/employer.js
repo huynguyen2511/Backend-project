@@ -3,11 +3,12 @@ import express from 'express'
 import verifyToken from '../middleware/verify_token'
 import uploadCloud, { fields } from '../middleware/uploader'
 import multer from 'multer'
+import { isEmployer } from '../middleware/verify_role'
 
 const router = express.Router()
 
 router.use(verifyToken)
-
+router.use(isEmployer)
 router.get('/', controller.getCurrentEmployer)
 router.put('/updateEmployer', controller.updateEmployer)
 
