@@ -30,3 +30,12 @@ export const changePassword = async (req, res) =>{
         return internalServerError(res)
     }
 }
+
+export const getCompanies = async (req, res) => {
+    try{
+        const response = await service.getCompanies()
+        return res.status(200).json(response)
+    }catch (error){
+        return internalServerError(res)
+    }
+}

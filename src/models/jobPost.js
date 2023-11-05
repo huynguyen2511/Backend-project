@@ -15,13 +15,14 @@ module.exports = (sequelize, DataTypes) => {
       JobPost.belongsTo(models.Attribute, { foreignKey: 'attributesId', targetKey: 'id', as: 'attributes' })
       JobPost.belongsTo(models.Employer, { foreignKey: 'employerId', targetKey: 'id', as: 'employer' })
       JobPost.belongsTo(models.Overview, { foreignKey: 'overviewId', targetKey: 'id', as: 'overview' })
-      JobPost.belongsTo(models.Company, { foreignKey: 'companyId', targetKey: 'id', as: 'company' })
+      JobPost.belongsTo(models.Company, { foreignKey: 'companyId', targetKey: 'id', as: 'companyPost' })
+      JobPost.belongsTo(models.Province, { foreignKey: 'provinceCode', targetKey: 'code', as: 'province' })
     }
   }
   JobPost.init({
     title: DataTypes.STRING,
     attributesId: DataTypes.STRING,
-    province: DataTypes.STRING,
+    provinceCode: DataTypes.STRING,
     address: DataTypes.STRING,
     employerId: DataTypes.STRING,
     companyId: DataTypes.STRING,

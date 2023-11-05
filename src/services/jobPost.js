@@ -29,6 +29,9 @@ export const createNewPostService = (body, employerId, companyId) => new Promise
         salary: body.salary,
         benefits: body.benefits,
         requirements: body.requirements,
+        experience: body.experience,
+        level: body.level,
+        recruitNumber: body.recruitNumber,
         published: moment(new Date()).format("DD/MM/YYYY"),
         hashtag,
       });
@@ -68,13 +71,11 @@ export const getPosts = () =>
         raw: true,
         nest: true,
         include: [
-          {
-            model: db.Attribute,
-            as: "attributes",
-            attributes: ["salary", "published", "hashtag"],
-          },
+          { model: db.Attribute, as: "attributes", attributes: ["salary", "published", "hashtag", "benefits", "requirements", "experience", "level", "recruitNumber"] },
+          { model: db.Overview, as: "overview", attributes: ["area", "category", "created", "expired"] },
           { model: db.Employer, as: "employer", attributes: ["name", "email"] },
-          { model: db.Company, as: "company", attributes: ["companyName"] },
+          { model: db.Company, as: "companyPost", attributes: ["id", "companyName", "staffSize"] },
+          { model: db.Province, as: "province", attributes: ["value"] },
         ],
         attributes: ["id", "title", "address", "description"],
       });

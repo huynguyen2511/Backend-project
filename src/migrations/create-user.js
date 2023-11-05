@@ -11,6 +11,7 @@ module.exports = {
       name: {type: Sequelize.STRING },
       email: {type: Sequelize.STRING },
       password: {type: Sequelize.STRING },
+      phone: {type: Sequelize.STRING },
       avatar: {type: Sequelize.STRING },
       role_code: {type: Sequelize.STRING, defaultValue:'R2'},
       refresh_token: {type: Sequelize.STRING },

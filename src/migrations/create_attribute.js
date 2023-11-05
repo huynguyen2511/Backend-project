@@ -5,13 +5,15 @@ module.exports = {
     await queryInterface.createTable('Attributes', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       salary: {type: Sequelize.STRING },
       benefits: {type: Sequelize.TEXT },
       requirements: {type: Sequelize.TEXT },
+      experience: {type: Sequelize.STRING },
+      level: {type: Sequelize.STRING },
+      recruitNumber: {type: Sequelize.STRING },
       published: {type: Sequelize.STRING },
       hashtag: {type: Sequelize.STRING },
       createdAt: {

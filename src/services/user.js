@@ -47,13 +47,15 @@ export const updateInfo = (userId, body) =>
     }
   });
 
-export const updatePassword = (userId, body) => new Promise(async (resolve, reject) => {
+export const updatePassword = (userId, body) =>
+  new Promise(async (resolve, reject) => {
     try {
       const response = await db.User.findOne({
         where: { id: userId },
         raw: true,
       });
-      const isChecked = response && bcrypt.compareSync(body.password, response.password);
+      const isChecked =
+        response && bcrypt.compareSync(body.password, response.password);
 
       const newPass = isChecked ? hashPassword(body.newPassword) : null;
 
@@ -71,6 +73,27 @@ export const updatePassword = (userId, body) => new Promise(async (resolve, reje
           }
         );
       }
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+export const getCompanies = () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await db.Company.findAll({
+        raw: true,
+        nest: true,
+        include: [
+          { model: db.Province, as: "province", attributes: ["value"] },
+        ],
+        attributes: ["id", "companyName", "address", "description","staffSize","field_of_activity"],
+      });
+      resolve({
+        err: response ? 0 : 1,
+        mes: response ? "Ok" : "Get all company failed.",
+        response,
+      });
     } catch (error) {
       reject(error);
     }

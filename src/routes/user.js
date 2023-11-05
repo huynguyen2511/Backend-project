@@ -7,6 +7,7 @@ const router = express.Router()
 //PUBLIC ROUTES
 
 
+router.get('/allCompanies', controller.getCompanies)
 router.use(verifyToken)
 //PRIVATE ROUTES
 router.use(isUser)

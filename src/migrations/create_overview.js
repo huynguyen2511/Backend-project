@@ -5,9 +5,8 @@ module.exports = {
     await queryInterface.createTable('Overviews', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       code: { type: Sequelize.STRING },
       area: {type: Sequelize.STRING },

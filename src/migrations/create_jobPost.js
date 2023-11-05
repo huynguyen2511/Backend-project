@@ -10,7 +10,7 @@ module.exports = {
       },
       title: {type: Sequelize.STRING },
       attributesId: {type: Sequelize.STRING },
-      province: {type: Sequelize.STRING },
+      provinceCode: {type: Sequelize.STRING },
       address: {type: Sequelize.STRING },
       employerId: {type: Sequelize.STRING },
       companyId: {type: Sequelize.STRING },
