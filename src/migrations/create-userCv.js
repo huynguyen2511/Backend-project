@@ -2,21 +2,19 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Attributes', {
+    await queryInterface.createTable('UserCvs', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
-      salary: {type: Sequelize.STRING },
-      benefits: {type: Sequelize.TEXT },
-      requirements: {type: Sequelize.TEXT },
-      experience: {type: Sequelize.STRING },
-      level: {type: Sequelize.STRING },
-      gender: {type: Sequelize.STRING },
-      recruitNumber: {type: Sequelize.STRING },
+      userId: {type: Sequelize.STRING },
+      cv_name: {type: Sequelize.STRING },
+      cv_document: {type: Sequelize.STRING },
+      status: {type: Sequelize.STRING },
+      findStatus: {type: Sequelize.STRING },
       published: {type: Sequelize.STRING },
-      hashtag: {type: Sequelize.STRING },
       createdAt: {
         allowNull: false,
         type: 'TIMESTAMP',
@@ -30,6 +28,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Attributes');
+    await queryInterface.dropTable('UserCvs');
   }
 };

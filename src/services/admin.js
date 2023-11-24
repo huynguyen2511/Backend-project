@@ -33,7 +33,6 @@ export const adminLogin = (body) => new Promise( async (resolve, reject) => {
 })
 
 export const adminRegister = (body) => new Promise( async (resolve, reject) => {
-    console.log(body.username, body.email, body.password);
     try {
         const response = await db.Admin.findOrCreate({
             where: { email : body.email},

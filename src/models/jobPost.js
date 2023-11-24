@@ -30,7 +30,6 @@ module.exports = (sequelize, DataTypes) => {
     categoryCode: DataTypes.STRING,
     overviewId: DataTypes.STRING,
     description: DataTypes.TEXT,
-
   }, {
     sequelize,
     modelName: 'JobPost',
