@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       JobPost.belongsTo(models.Overview, { foreignKey: 'overviewId', targetKey: 'id', as: 'overview' })
       JobPost.belongsTo(models.Company, { foreignKey: 'companyId', targetKey: 'id', as: 'companyPost' })
       JobPost.belongsTo(models.Province, { foreignKey: 'provinceCode', targetKey: 'code', as: 'province' })
+      JobPost.hasMany(models.AppliedCv, { foreignKey: 'jobPostId', as: 'postAppliedCv' })
     }
   }
   JobPost.init({

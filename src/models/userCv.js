@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       UserCv.belongsTo(models.User, {foreignKey: 'userId', targetKey: 'id', as: 'userData'})
+      UserCv.hasMany(models.AppliedCv, { foreignKey: 'userCvId', as: 'cvAppliedCv' })
     }
   }
   UserCv.init({

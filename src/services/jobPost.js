@@ -10,10 +10,17 @@ export const createNewPostService = (body, employerId, companyId) => new Promise
       const labelCode = generateCode(body.label);
       const hashtag = `#${Math.floor(Math.random() * Math.pow(10, 6))}`;
       const currentDate = new Date();
+      const nextDate = new Date();
+      const compName = await db.Company.findOne({
+        where: {
+          id: companyId,
+        },
+        attributes: ["companyName"],
+      });
 
       const response = await db.JobPost.create({
         id: generateId(),
-        title: body.title,
+        title: body.title + ' at company ' + compName.companyName,
         labelCode,
         attributesId,
         categoryCode: body.categoryCode,
@@ -43,7 +50,7 @@ export const createNewPostService = (body, employerId, companyId) => new Promise
         category: body.category,
         bonus: "Tin Thuong",
         created: currentDate,
-        expired: currentDate.setDate(currentDate.getDate() + 10),
+        expired: nextDate.setDate(currentDate.getDate() + 30)
       });
       await db.Label.findOrCreate({
         where: {
@@ -74,7 +81,6 @@ export const getPosts = () =>
         include: [
           { model: db.Attribute, as: "attributes", attributes: ["salary", "published", "hashtag", "benefits", "requirements", "experience", "level", "recruitNumber", "gender"] },
           { model: db.Overview, as: "overview", attributes: ["area", "category", "created", "expired"] },
-          { model: db.Employer, as: "employer", attributes: ["name", "email"] },
           { model: db.Company, as: "companyPost", attributes: ["id", "companyName", "staffSize"] },
           { model: db.Province, as: "province", attributes: ["value"] },
         ],

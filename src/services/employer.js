@@ -6,7 +6,6 @@ export const getOneEmployer = (employerId) => new Promise( async (resolve, rejec
             where: { id: employerId },
             attributes: ['name', 'email', 'gender', 'phone', 'jobPosition', 'avatar']
         })
-        
         resolve({
             // err: response ? 0 : 1,
             // mes: response ? 'Got' : 'Employer not found',
