@@ -18,7 +18,9 @@ module.exports = {
       categoryCode: {type: Sequelize.STRING },
       overviewId: {type: Sequelize.STRING },
       description: {type: Sequelize.TEXT },
-      
+      experience: {type: Sequelize.STRING },
+      salary: {type: Sequelize.STRING },
+      expired: {type: Sequelize.DATE },
       createdAt: {
         allowNull: false,
         type: 'TIMESTAMP',

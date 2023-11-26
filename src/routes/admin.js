@@ -10,7 +10,8 @@ router.post('/login', controller.adminLogin)
 
 router.use(verifyToken)
 router.use(isAdmin)
-
+router.get('/getUsers', controller.getUsers)
 router.get('/getEmployers', controller.getEmployers)
+router.put('/setStatusEmployer', controller.setStatusEmployer)
 
 module.exports = router

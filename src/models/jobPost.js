@@ -31,6 +31,9 @@ module.exports = (sequelize, DataTypes) => {
     categoryCode: DataTypes.STRING,
     overviewId: DataTypes.STRING,
     description: DataTypes.TEXT,
+    experience: DataTypes.STRING,
+    salary: DataTypes.STRING,
+    expired: DataTypes.DATE,
   }, {
     sequelize,
     modelName: 'JobPost',

@@ -42,3 +42,22 @@ export const getEmployers = async (req, res) =>{
         return internalServerError(res)
     }
 }
+
+export const getUsers = async (req, res) =>{
+    try {
+        const response = await service.getUsers()
+        return res.status(200).json(response)
+    } catch (error) {
+        return internalServerError(res)
+    }
+}
+
+export const setStatusEmployer = async (req, res) =>{
+    try {
+        console.log(req.body);
+        const response = await service.setStatusEmployer(req.body)
+        return res.status(200).json(response)
+    } catch (error) {
+        return internalServerError(res)
+    }
+}

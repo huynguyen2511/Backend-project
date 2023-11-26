@@ -2,8 +2,11 @@ import { generateCode } from "../helper/fn";
 import db from "../models";
 import { v4 as generateId } from "uuid";
 import moment from "moment/moment";
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
-export const createNewPostService = (body, employerId, companyId) => new Promise(async (resolve, reject) => {
+export const createNewPostService = (body, employerId, companyId) =>
+  new Promise(async (resolve, reject) => {
     try {
       const attributesId = generateId();
       const overviewId = generateId();
@@ -20,7 +23,7 @@ export const createNewPostService = (body, employerId, companyId) => new Promise
 
       const response = await db.JobPost.create({
         id: generateId(),
-        title: body.title + ' at company ' + compName.companyName,
+        title: body.title + " at company " + compName.companyName,
         labelCode,
         attributesId,
         categoryCode: body.categoryCode,
@@ -30,13 +33,14 @@ export const createNewPostService = (body, employerId, companyId) => new Promise
         description: body.description || "",
         provinceCode: body.provinceCode,
         address: body.address,
+        salary: body.salary,
+        experience: body.experience,
+        expired: nextDate.setDate(currentDate.getDate() + 30),
       });
       await db.Attribute.create({
         id: attributesId,
-        salary: body.salary,
         benefits: body.benefits,
         requirements: body.requirements,
-        experience: body.experience,
         level: body.level,
         gender: body.gender,
         recruitNumber: body.recruitNumber,
@@ -50,7 +54,7 @@ export const createNewPostService = (body, employerId, companyId) => new Promise
         category: body.category,
         bonus: "Tin Thuong",
         created: currentDate,
-        expired: nextDate.setDate(currentDate.getDate() + 30)
+        expired: nextDate.setDate(currentDate.getDate() + 30),
       });
       await db.Label.findOrCreate({
         where: {
@@ -79,12 +83,45 @@ export const getPosts = () =>
         raw: true,
         nest: true,
         include: [
-          { model: db.Attribute, as: "attributes", attributes: ["salary", "published", "hashtag", "benefits", "requirements", "experience", "level", "recruitNumber", "gender"] },
-          { model: db.Overview, as: "overview", attributes: ["area", "category", "created", "expired"] },
-          { model: db.Company, as: "companyPost", attributes: ["id", "companyName", "staffSize"] },
+          {
+            model: db.Attribute,
+            as: "attributes",
+            attributes: [
+              "published",
+              "hashtag",
+              "benefits",
+              "requirements",
+              "level",
+              "recruitNumber",
+              "gender",
+            ],
+          },
+          {
+            model: db.Employer,
+            as: "employer",
+            attributes: ["id", "name", "email"],
+          },
+          {
+            model: db.Overview,
+            as: "overview",
+            attributes: ["area", "category", "created", "expired"],
+          },
+          {
+            model: db.Company,
+            as: "companyPost",
+            attributes: ["id", "companyName", "staffSize"],
+          },
           { model: db.Province, as: "province", attributes: ["value"] },
         ],
-        attributes: ["id", "title", "address", "description"],
+        attributes: [
+          "id",
+          "title",
+          "address",
+          "description",
+          "salary",
+          "experience",
+          "expired"
+        ],
       });
       resolve({
         err: response ? 0 : 1,
@@ -106,14 +143,78 @@ export const getPostsByEmployer = (id) =>
         raw: true,
         nest: true,
         include: [
-          { model: db.Attribute, as: "attributes", attributes: ["salary", "published", "hashtag", "benefits", "requirements", "experience", "level", "recruitNumber"] },
-          { model: db.Overview, as: "overview", attributes: ["area", "category", "created", "expired"] },
+          {
+            model: db.Attribute,
+            as: "attributes",
+            attributes: [
+              "published",
+              "hashtag",
+              "benefits",
+              "requirements",
+              "level",
+              "recruitNumber",
+              "gender",
+            ],
+          },
+          {
+            model: db.Overview,
+            as: "overview",
+            attributes: ["area", "category", "created", "expired"],
+          },
           { model: db.Employer, as: "employer", attributes: ["name", "email"] },
-          { model: db.Company, as: "companyPost", attributes: ["id", "companyName", "staffSize"] },
+          {
+            model: db.Company,
+            as: "companyPost",
+            attributes: ["id", "companyName", "staffSize"],
+          },
           { model: db.Province, as: "province", attributes: ["value"] },
         ],
-        attributes: ["id", "title", "address", "description"],
+        attributes: [
+          "id",
+          "title",
+          "address",
+          "description",
+          "salary",
+          "experience",
+          "expired"
+        ],
       });
+      resolve({
+        err: response ? 0 : 1,
+        mes: response ? "Ok" : "Get all post failed.",
+        response,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+export const getSearchedPosts = (params) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      console.log(params.province);
+      const position = params.position;
+      const provinceCode = params.province;
+      const workExperience = params.workExperience;
+      const salary = params.salary;
+      const options = {
+        where: {},
+      };
+
+      if (position != 'null') {
+        options.where.title = { [Op.like]: `%${position}%` };
+      }
+      if (provinceCode != 'null') {
+        options.where.provinceCode = provinceCode;
+      }
+      if (workExperience != 'null') {
+        options.where.experience = workExperience;
+      }
+      if (salary != 'null') {
+        options.where.salary = salary;
+      }
+      console.log(options);
+      const response = await db.JobPost.findAll(options);
       resolve({
         err: response ? 0 : 1,
         mes: response ? "Ok" : "Get all post failed.",

@@ -2,6 +2,8 @@ import db from "../models";
 import bcrypt from "bcryptjs";
 const cloudinary = require('cloudinary').v2;
 import moment from "moment/moment";
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 const salt = bcrypt.genSaltSync(10);
 const hashPassword = (password) => bcrypt.hashSync(password, salt);
@@ -16,6 +18,7 @@ export const getCurrent = (userId) =>
         },
         include: [
           { model: db.Role, as: "roleData", attributes: ["code", "value"] },
+          { model: db.UserCv, as: "userCvs", attributes: ["id", "cv_document", "published","status"] },
         ],
       });
 
@@ -127,6 +130,8 @@ export const getCompanies = () =>
           "description",
           "staffSize",
           "field_of_activity",
+          "phone",
+          "email"
         ],
       });
       resolve({
@@ -203,3 +208,35 @@ export const setMainCv = (userId, body) => new Promise(async(resolve, reject) =>
     reject(error)
   }
 })
+
+export const getCompanyByName = (query) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const name = query.companyName;
+      const response = await db.Company.findAll({
+        where:{
+          companyName: { [Op.like]: `%${name}%` }
+        },
+        raw: true,
+        nest: true,
+        include: [
+          { model: db.Province, as: "province", attributes: ["value"] },
+        ],
+        attributes: [
+          "id",
+          "companyName",
+          "address",
+          "description",
+          "staffSize",
+          "field_of_activity",
+        ],
+      });
+      resolve({
+        err: response ? 0 : 1,
+        mes: response ? "Ok" : "Get all company failed.",
+        response,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });

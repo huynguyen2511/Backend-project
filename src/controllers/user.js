@@ -90,3 +90,13 @@ export const setCvMain = async (req, res) => {
 
     }
 }
+
+export const getSearchedCompany = async (req, res) => {
+    try{
+        console.log(req.query);
+        const response = await service.getCompanyByName(req.query)
+        return res.status(200).json(response)
+    }catch (error){
+        return internalServerError(res)
+    }
+}

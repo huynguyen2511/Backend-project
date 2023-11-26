@@ -8,10 +8,8 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.STRING
       },
-      salary: {type: Sequelize.STRING },
       benefits: {type: Sequelize.TEXT },
       requirements: {type: Sequelize.TEXT },
-      experience: {type: Sequelize.STRING },
       level: {type: Sequelize.STRING },
       gender: {type: Sequelize.STRING },
       recruitNumber: {type: Sequelize.STRING },

@@ -4,7 +4,7 @@ export const getOneEmployer = (employerId) => new Promise( async (resolve, rejec
     try {
         const response = await db.Employer.findOne({
             where: { id: employerId },
-            attributes: ['name', 'email', 'gender', 'phone', 'jobPosition', 'avatar']
+            attributes: ['name', 'email', 'gender', 'phone', 'jobPosition', 'avatar', 'statusCode']
         })
         resolve({
             // err: response ? 0 : 1,
@@ -28,6 +28,8 @@ export const updateEmployer=(body , userId) => new Promise( async (resolve, reje
             response.phone = body.phone;
             response.gender = body.gender,
             response.jobPosition = body.jobPosition,
+            response.statusCode = 'Pending verified',
+
             await response.save();
         }
         resolve({

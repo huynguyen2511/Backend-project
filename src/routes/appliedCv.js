@@ -10,5 +10,6 @@ router.post('/createApplyCv',isUser,controller.createAppliedCv)
 router.get('/getAppliedPosts',isUser,controller.getAppliedPosts)
 
 router.get('/getAppliedCvs',isEmployer,controller.getAppliedCvs)
+router.put('/setStatus',isEmployer, controller.setStatusAppliedCv)
 
 module.exports = router

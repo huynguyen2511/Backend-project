@@ -33,3 +33,14 @@ export const getPostsByEmployer = async (req, res) => {
 }
 
 
+export const getSearchedPosts = async (req, res) => {
+    try{
+        console.log(req.query);
+        const response = await service.getSearchedPosts(req.query)
+        return res.status(200).json(response)
+    }catch (error){
+        return internalServerError(res)
+    }
+}
+
+

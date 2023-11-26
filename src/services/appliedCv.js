@@ -17,19 +17,19 @@ export const createAppliedCv = (body, userId) =>
         userCvId: userCv.id,
         employerId: body.employerId,
         jobPostId: body.jobPostId,
-        dateApply: moment(new Date()).format("DD/MM/YYYY")
+        dateApply: moment(new Date()).format("DD/MM/YYYY"),
       });
       resolve({
         err: response ? 0 : 1,
         mes: response ? "Ok" : "Applied fail",
-        response
+        response,
       });
     } catch (error) {
       reject(error);
     }
   });
 
-  export const getAppliedCvByUser = (id) =>
+export const getAppliedCvByUser = (id) =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await db.AppliedCv.findAll({
@@ -39,7 +39,11 @@ export const createAppliedCv = (body, userId) =>
         raw: true,
         nest: true,
         include: [
-          { model: db.JobPost, as: "postAppliedCv", attributes: ["id", "title", "address"] }
+          {
+            model: db.JobPost,
+            as: "postAppliedCv",
+            attributes: ["id", "title", "address"],
+          },
         ],
         attributes: ["id", "status", "dateApply"],
       });
@@ -53,7 +57,7 @@ export const createAppliedCv = (body, userId) =>
     }
   });
 
-  export const getAppliedCvByEmployer = (id) =>
+export const getAppliedCvByEmployer = (id) =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await db.AppliedCv.findAll({
@@ -63,9 +67,21 @@ export const createAppliedCv = (body, userId) =>
         raw: true,
         nest: true,
         include: [
-          { model: db.JobPost, as: "postAppliedCv", attributes: ["id", "title"] },
-          { model: db.User, as: "userAppliedCv", attributes: ["id", "name", "email"] },
-          { model: db.UserCv, as: "cvAppliedCv", attributes: ["id", "cv_document"] },
+          {
+            model: db.JobPost,
+            as: "postAppliedCv",
+            attributes: ["id", "title"],
+          },
+          {
+            model: db.User,
+            as: "userAppliedCv",
+            attributes: ["id", "name", "email"],
+          },
+          {
+            model: db.UserCv,
+            as: "cvAppliedCv",
+            attributes: ["id", "cv_document"],
+          },
         ],
         attributes: ["id", "status", "dateApply"],
       });
@@ -78,3 +94,30 @@ export const createAppliedCv = (body, userId) =>
       reject(error);
     }
   });
+
+export const setStatusAppliedCv = (body) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      console.log(body);
+      const response = await db.AppliedCv.findOne({
+        where: { id: body.id },
+      });
+      if (response) {
+        response.status = body.status;
+        await response.save();
+        resolve({
+          err: 0,
+          mes: "Updated",
+          response
+        });
+      } else {
+        resolve({
+          err: 1,
+          mes: "Set status fail",
+        });
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+

@@ -10,6 +10,7 @@ const router = express.Router()
 
 
 router.get('/allCompanies', controller.getCompanies)
+router.get('/searchedCompany', controller.getSearchedCompany)
 router.use(verifyToken)
 //PRIVATE ROUTES
 router.use(isUser)

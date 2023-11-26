@@ -7,6 +7,7 @@ const router = express.Router()
 
 
 router.get('/allPosts', controller.getPosts)
+router.get('/searchedPosts', controller.getSearchedPosts)
 router.use(verifyToken)
 
 router.post('/create-new', isEmployer ,controller.createNewPost)
