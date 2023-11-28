@@ -240,3 +240,20 @@ export const getCompanyByName = (query) =>
       reject(error);
     }
   });
+
+  export const deleteCv = (body) => new Promise(async(resolve, reject) =>{
+    try{
+      const response = await db.UserCv.destroy({
+        where:{
+          id: body.cvId
+        }
+      })
+      resolve({
+        err: response > 0 ? 0 : 1,
+        mes: response > 0 ? 'Deleted' : 'delete Cv failed.',
+        response
+    })
+    }catch (error) {
+      reject(error)
+    }
+  })

@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   License.init({
     related_documents: DataTypes.STRING,
-    additional_documents: DataTypes.STRING,
     statusCode: DataTypes.STRING,
     employerId: DataTypes.STRING,
   }, {

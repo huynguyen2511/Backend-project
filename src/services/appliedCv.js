@@ -98,7 +98,6 @@ export const getAppliedCvByEmployer = (id) =>
 export const setStatusAppliedCv = (body) =>
   new Promise(async (resolve, reject) => {
     try {
-      console.log(body);
       const response = await db.AppliedCv.findOne({
         where: { id: body.id },
       });

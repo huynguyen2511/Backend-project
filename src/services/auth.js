@@ -20,9 +20,8 @@ export const register = (body) => new Promise( async (resolve, reject) => {
                 password: hashPassword(body.password)
             }
         })
-
-        const accessToken = response[1] ? jwt.sign({id: response[0].id, email: response[0].email, role_code: response[0].role_code}, process.env.JWT_SECRET, {expiresIn: '10s'}) 
-        : null
+        const accessToken = response[1] ? jwt.sign({id: response[0].id, email: response[0].email, role_code: response[0].role_code},
+             process.env.JWT_SECRET, {expiresIn: '10s'}) : null
         //JWT_SECRET_REFRESH_TOKEN
         const refreshToken = response[1] 
         ? jwt.sign({id: response[0].id}, process.env.JWT_SECRET_REFRESH_TOKEN, {expiresIn: '1d'}) 
@@ -30,7 +29,7 @@ export const register = (body) => new Promise( async (resolve, reject) => {
 
         resolve({
             err: response[1] ? 0 : 1,
-            mes: response[1] ? 'REgister successfully' : 'Email da duoc dung',
+            mes: response[1] ? 'REgister successfully' : 'Email is already in use',
             'access_token': accessToken ? `Bearer ${accessToken}` : accessToken,
             'refresh_token': refreshToken
         })
@@ -64,7 +63,7 @@ export const login = ({email, password}) => new Promise( async (resolve, reject)
 
         resolve({
             err: token ? 0 : 1,
-            mes: token ? 'Login successfully' : response ? 'Wrong password' : 'Email chua dc dang ki',
+            mes: token ? 'Login successfully' : response ? 'Wrong password' : 'Email has not been registered',
             'access_token': token ? `Bearer ${token}` : token,
             'refresh_token': refreshToken
         })
@@ -119,19 +118,19 @@ export const employerRegister = (body) => new Promise( async (resolve, reject) =
         })
         await db.License.create({
             employerId,
-            related_documents: null,
-            additional_documents: null
-        })
+            additional_documents: null,
 
+        })
         //Generate token
-        const accessToken = response[1] ? jwt.sign({id: response[0].id, email: response[0].email, role_code: response[0].role_code}, process.env.JWT_SECRET, {expiresIn: '10s'}) : null
+        const accessToken = response[1] ? jwt.sign({id: response[0].id, email: response[0].email, role_code: response[0].role_code},
+             process.env.JWT_SECRET, {expiresIn: '10s'}) : null
         //JWT_SECRET_REFRESH_TOKEN
         const refreshToken = response[1] 
         ? jwt.sign({id: response[0].id}, process.env.JWT_SECRET_REFRESH_TOKEN, {expiresIn: '1d'}) 
         : null
         resolve({
             err: response[1] ? 0 : 1,
-            mes: response[1] ? 'REgister successfully' : 'Email da duoc dung',
+            mes: response[1] ? 'REgister successfully' : 'Email is already in use',
             'access_token': accessToken ? `Bearer ${accessToken}` : accessToken,
             'refresh_token': refreshToken
         })
@@ -166,7 +165,7 @@ export const employerLogin = ({email, password}) => new Promise( async (resolve,
 
         resolve({
             err: token ? 0 : 1,
-            mes: token ? 'Login successfully' : response ? 'Wrong password' : 'Email chua dc dang ki',
+            mes: token ? 'Login successfully' : response ? 'Wrong password' : 'Email has not been registered',
             'access_token': token ? `Bearer ${token}` : token,
             'refresh_token': refreshToken
         })

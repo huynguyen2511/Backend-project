@@ -18,7 +18,6 @@ export const updateCompany = async (req, res) =>{
 export const updateLicense = async (req, res) =>{
     try {
         const fileData = req.file;
-        console.log(fileData);
         const { id } = req.user;
         if ( !id || !fileData) {
             if(fileData) cloudinary.uploader.destroy(fileData.filename)

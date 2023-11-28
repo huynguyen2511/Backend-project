@@ -79,7 +79,11 @@ export const createNewPostService = (body, employerId, companyId) =>
 export const getPosts = () =>
   new Promise(async (resolve, reject) => {
     try {
+      const currentDate = new Date()
       const response = await db.JobPost.findAll({
+        where:{
+          expired: { [Op.gte]: currentDate }
+        },
         raw: true,
         nest: true,
         include: [
@@ -192,7 +196,7 @@ export const getPostsByEmployer = (id) =>
 export const getSearchedPosts = (params) =>
   new Promise(async (resolve, reject) => {
     try {
-      console.log(params.province);
+      const currentDate = new Date()
       const position = params.position;
       const provinceCode = params.province;
       const workExperience = params.workExperience;
@@ -200,7 +204,7 @@ export const getSearchedPosts = (params) =>
       const options = {
         where: {},
       };
-
+      
       if (position != 'null') {
         options.where.title = { [Op.like]: `%${position}%` };
       }
@@ -213,6 +217,7 @@ export const getSearchedPosts = (params) =>
       if (salary != 'null') {
         options.where.salary = salary;
       }
+      options.where.expired = { [Op.gte]: currentDate }
       console.log(options);
       const response = await db.JobPost.findAll(options);
       resolve({

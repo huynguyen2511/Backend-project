@@ -41,7 +41,6 @@ export const updateLicense = (id, link) => new Promise( async (resolve, reject) 
         })
         if (response){
             response.related_documents= link?.path;
-            // response.additional_documents = body.additional_documents;
             response.statusCode = 'Pending verified';
             await response.save();
             resolve({

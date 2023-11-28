@@ -100,3 +100,13 @@ export const getSearchedCompany = async (req, res) => {
         return internalServerError(res)
     }
 }
+
+export const deleteCv = async (req, res) => {
+    try{
+        const response = await service.deleteCv(req.query)
+        return res.status(200).json(response)
+    }catch (error){
+        return internalServerError(res)
+
+    }
+}

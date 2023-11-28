@@ -1,7 +1,7 @@
 import * as controller from '../controllers'
 import express from 'express'
 import verifyToken from '../middleware/verify_token'
-import uploadCloud, { fields } from '../middleware/uploader'
+import uploadCloud from '../middleware/uploader'
 import multer from 'multer'
 import { isEmployer } from '../middleware/verify_role'
 

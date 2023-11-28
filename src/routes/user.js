@@ -21,6 +21,7 @@ router.put('/changePassword', controller.changePassword)
 router.post('/createCv', uploadCloud.single('cv_document') ,controller.createCvController)
 router.get('/getUserCvs', controller.getUserCvs)
 router.put('/setMainCv', controller.setCvMain)
+router.delete('/deleteCv', controller.deleteCv)
 
 
 module.exports = router

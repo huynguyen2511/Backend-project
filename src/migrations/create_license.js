@@ -10,8 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       related_documents: { type: Sequelize.STRING },
-      additional_documents: {type: Sequelize.STRING },
-      statusCode: {type: Sequelize.STRING, defaultValue:'S1' },
+      statusCode: {type: Sequelize.STRING, defaultValue:'Unverified' },
       employerId: {type: Sequelize.STRING },
       
       createdAt: {
