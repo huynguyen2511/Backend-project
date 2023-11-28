@@ -4,7 +4,7 @@ export const getOneEmployer = (employerId) => new Promise( async (resolve, rejec
     try {
         const response = await db.Employer.findOne({
             where: { id: employerId },
-            attributes: ['name', 'email', 'gender', 'phone', 'jobPosition', 'avatar', 'statusCode']
+            attributes: ['id','name', 'email', 'gender', 'phone', 'jobPosition', 'avatar', 'statusCode']
         })
         resolve({
             // err: response ? 0 : 1,

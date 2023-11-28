@@ -137,6 +137,12 @@ export const setStatusEmployer = (body) =>
           mes: "Updated",
           response,
         });
+
+        await db.License.update({ statusCode: body.status }, {
+          where: {
+            employerId: body.id
+          }
+        });
       } else {
         resolve({
           err: 1,

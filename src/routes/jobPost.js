@@ -12,5 +12,6 @@ router.use(verifyToken)
 
 router.post('/create-new', isEmployer ,controller.createNewPost)
 router.get('/allPostsByEmployer', isEmployer, controller.getPostsByEmployer)
+router.delete('/deletePost',isEmployer, controller.deletePost)
 
 module.exports = router

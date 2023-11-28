@@ -29,6 +29,35 @@ export const createAppliedCv = (body, userId) =>
     }
   });
 
+export const reApply = (body, userId) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      console.log(body);
+      const userCv = await db.UserCv.findOne({
+        where: {
+          userId: userId,
+          status: "On",
+        },
+        attributes: ["id"],
+      });
+      const response = await db.AppliedCv.update(
+        {
+          userCvId: userCv.id,
+          status: "Sent",
+          dateApply: moment(new Date()).format("DD/MM/YYYY"),
+        },
+        { where: { userId: userId, jobPostId: body.jobPostId } }
+      );
+      resolve({
+        err: response ? 0 : 1,
+        mes: response ? "Ok" : "Update fail",
+        response,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+
 export const getAppliedCvByUser = (id) =>
   new Promise(async (resolve, reject) => {
     try {
@@ -107,7 +136,7 @@ export const setStatusAppliedCv = (body) =>
         resolve({
           err: 0,
           mes: "Updated",
-          response
+          response,
         });
       } else {
         resolve({
@@ -119,4 +148,3 @@ export const setStatusAppliedCv = (body) =>
       reject(error);
     }
   });
-

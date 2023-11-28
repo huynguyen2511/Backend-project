@@ -40,3 +40,13 @@ export const setStatusAppliedCv = async (req, res) =>{
         return internalServerError(res)
     }
 }
+
+export const reApplyCv = async (req, res) =>{
+    try {
+        const { id } = req.user;
+        const response = await service.reApply(req.body ,id)
+        return res.status(200).json(response)
+    } catch (error) {
+        return internalServerError(res)
+    }
+}

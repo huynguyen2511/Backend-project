@@ -43,4 +43,14 @@ export const getSearchedPosts = async (req, res) => {
     }
 }
 
+export const deletePost = async (req, res) => {
+    try{
+        const response = await service.deletePost(req.query)
+        return res.status(200).json(response)
+    }catch (error){
+        return internalServerError(res)
+
+    }
+}
+
 

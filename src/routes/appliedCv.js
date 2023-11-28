@@ -7,6 +7,7 @@ const router = express.Router()
 router.use(verifyToken)
 
 router.post('/createApplyCv',isUser,controller.createAppliedCv)
+router.put('/reapplyCv',isUser,controller.reApplyCv)
 router.get('/getAppliedPosts',isUser,controller.getAppliedPosts)
 
 router.get('/getAppliedCvs',isEmployer,controller.getAppliedCvs)
